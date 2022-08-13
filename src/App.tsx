@@ -1,10 +1,10 @@
-import "./styles.css";
+import React from 'react';
+import {AllAvailableRouter} from "./router";
+import {Routes} from "react-router-dom";
 
-export default function App() {
-  return (
-    <div>
-      <p className={"font-bold"}>Hello CodeSandbox</p>
-      <h2>Start editing to see some magic happen!</h2>
-    </div>
-  );
+function App() {
+    return (
+      <AllAvailableRouter/>);
 }
+
+export default App;
