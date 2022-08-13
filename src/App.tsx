@@ -1,10 +1,8 @@
-import React from 'react';
-import {AllAvailableRouter} from "./router";
-import {Routes} from "react-router-dom";
+import React from "react";
+import { AllAvailableRouter } from "./router";
 
 function App() {
-    return (
-      <AllAvailableRouter/>);
+  return <AllAvailableRouter />;
 }
 
 export default App;
