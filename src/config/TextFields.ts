@@ -25,10 +25,11 @@ export const MuiTextFieldVariantsOverridden: ComponentsVariants["MuiTextField"] 
         "& .MuiInputBase-root": {
           margin: 0,
           padding: 0,
-          position: "unset",
+          position: "unset ",
           height: "100%",
+          content: "unset",
+          border: "0 !important",
         },
-
         "& .MuiInputBase-input": {
           borderRadius: "0.1rem",
           grow: "1",

@@ -1,3 +1,10 @@
-import { StandardTextFieldProps } from "@mui/material/TextField/TextField";
+import {
+  StandardTextFieldProps,
+  TextFieldProps,
+} from "@mui/material/TextField/TextField";
 
-export interface AppTextInputFieldProps extends StandardTextFieldProps {}
+export interface AppTextInputFieldProps
+  extends TextFieldProps,
+    StandardTextFieldProps {
+  variant?: "material" | "standard";
+}

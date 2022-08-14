@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useRef, useState } from "react";
-import { AppTextInputField } from "../components/UI/AppTextInputField";
+import React, { useRef, useState } from "react";
+import { TaskAddForm } from "../components/layouts/TaskAddForm/TaskAddFrom";
 
 function HomePageComponent(
   props: any,
@@ -11,16 +11,12 @@ function HomePageComponent(
   }, 4000);
   const [value, setValue] = useState<string>("");
   return (
-    <div className={"h-12 w-32"}>
-      <AppTextInputField
-        label={"HELLO"}
-        ref={inputRef}
-        value={value}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          console.log(e.currentTarget.value);
-          setValue(e.currentTarget.value);
-        }}
-      />
+    <div
+      className={
+        "h-full w-full flex flex-col justify-center items-center h-full"
+      }
+    >
+      <TaskAddForm className={"w-1/2 flex flex-col gap-4 box-border py-2"} />
     </div>
   );
 }
