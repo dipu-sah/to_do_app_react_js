@@ -5,7 +5,7 @@ import React, { ForwardedRef } from "react";
 export const AppTextInputField = React.forwardRef(AppTextInputFieldComponent);
 
 export function AppTextInputFieldComponent(
-  { variant = "material", ...props }: AppTextInputFieldProps,
+  { variant = "material",...props }: AppTextInputFieldProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   if (variant === "material") {
@@ -20,7 +20,7 @@ export function AppTextInputFieldComponent(
   }
   return (
     <TextField
-      fullWidth={true}
+        fullWidth={true}
       variant={"standard"}
       inputRef={ref}
       {...props}

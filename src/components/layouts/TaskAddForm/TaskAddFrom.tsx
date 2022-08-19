@@ -1,5 +1,5 @@
 import { TaskAddFromProps } from "./TaskAddFrom.props";
-import React, { ForwardedRef, useState } from "react";
+import React, {  useState } from "react";
 import { AppForm } from "../../UI/AppForms/AppForm";
 import { AppInputSwitcherProps } from "../../UI/AppInputSwitcher/AppInputSwitcher.props";
 import { AppButton } from "../../UI/AppButton/AppButton";
@@ -10,7 +10,6 @@ export const TaskAddForm = React.forwardRef<HTMLFormElement, TaskAddFromProps>(
 
 function TaskAddFormComponent(
   { className = "", onSubmit = () => {} }: TaskAddFromProps,
-  ref: ForwardedRef<HTMLFormElement>
 ) {
   const [TaskDetails, setTaskDetails] = useState<Record<string, string>>({
     description: "",
@@ -20,7 +19,7 @@ function TaskAddFormComponent(
   const taskFormFields: AppInputSwitcherProps[] = [
     {
       type: "text",
-      variant: "material",
+      variant: "standard",
       name: "title",
       required: true,
       label: "Task Title",
@@ -28,8 +27,8 @@ function TaskAddFormComponent(
     },
     {
       type: "text",
-      variant: "material",
-      name: "title",
+      variant: "standard",
+      name: "description",
       label: "Description",
       placeholder: "Description",
     },
@@ -37,7 +36,12 @@ function TaskAddFormComponent(
 
   return (
     <AppForm
-      className={"w-11/12 box-border py-8"}
+      className={"w-11/12 box-border py-8 " +className }
+      onSubmit={(e)=>{
+        console.log(e)
+        onSubmit(e)
+      }}
+
       onChange={(e) => {
         setTaskDetails({ ...TaskDetails, ...e });
       }}
