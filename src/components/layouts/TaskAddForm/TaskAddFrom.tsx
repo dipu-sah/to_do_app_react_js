@@ -1,5 +1,5 @@
 import { TaskAddFromProps } from "./TaskAddFrom.props";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { AppForm } from "../../UI/AppForms/AppForm";
 import { AppInputSwitcherProps } from "../../UI/AppInputSwitcher/AppInputSwitcher.props";
 import { AppButton } from "../../UI/AppButton/AppButton";
@@ -8,9 +8,11 @@ export const TaskAddForm = React.forwardRef<HTMLFormElement, TaskAddFromProps>(
   TaskAddFormComponent
 );
 
-function TaskAddFormComponent(
-  { className = "", onSubmit = () => {}, resetForm=false }: TaskAddFromProps,
-) {
+function TaskAddFormComponent({
+  className = "",
+  onSubmit = () => {},
+  resetForm = false,
+}: TaskAddFromProps) {
   const [TaskDetails, setTaskDetails] = useState<Record<string, string>>({
     description: "",
     title: "",
@@ -22,8 +24,8 @@ function TaskAddFormComponent(
       variant: "standard",
       name: "title",
       required: {
-        value:true,
-        message:"Please provide a task title"
+        value: true,
+        message: "Please provide a task title",
       },
       label: "Task Title",
       placeholder: "Task Title",
@@ -34,21 +36,20 @@ function TaskAddFormComponent(
       name: "description",
       label: "Description",
       placeholder: "Description",
-      required:{
+      required: {
         value: true,
-        message:"No description added"
-      }
+        message: "No description added",
+      },
     },
   ];
 
   return (
     <AppForm
-      className={"w-11/12 box-border py-8 " +className }
-      onSubmit={(e)=>{
-        onSubmit(e)
+      className={"w-11/12 box-border py-8 " + className}
+      onSubmit={(e) => {
+        onSubmit(e);
       }}
       shouldReset={resetForm}
-
       onChange={(e) => {
         setTaskDetails({ ...TaskDetails, ...e });
       }}

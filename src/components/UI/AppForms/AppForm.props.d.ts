@@ -10,5 +10,5 @@ export interface AppFormProps<ValueType> {
   onChange?: (e: ValueType) => void;
   onSubmit?: (e: ValueType) => void;
   className?: string;
-  shouldReset?:boolean;
+  shouldReset?: boolean;
 }
