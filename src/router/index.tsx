@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { ReactElement, useState } from "react";
 import { HomePage } from "../views";
+import {Test} from "../views/test";
 
 export function AllAvailableRouter() {
   const currentRoute = useLocation();
@@ -22,6 +23,9 @@ export function AllAvailableRouter() {
         <div>Not show</div>
       ),
       path: "/show",
+    },{
+      element:<Test/>,
+      path: "/test",
     },
   ];
   setTimeout(() => {

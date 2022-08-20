@@ -45,7 +45,7 @@ function AppFormComponent(
                 onSubmit(d)
             })}
         >
-            {formFieldsStates.map((el: AppInputSwitcherProps, index) => {
+            {formFieldsStates.map((el, index) => {
                 return (
                     <div
                         key={index}
@@ -55,23 +55,11 @@ function AppFormComponent(
                             {...el}
                             label={`${el.label} ${el.required ? "*" : ""}`}
                             {...register(el.name, {
-                                required: {
-                                    value: !!el.required,
-                                    message: "Please fill this value"
-                                },
-                                maxLength: {
-                                    value: el.maxLength || 9999999999,
-                                    message: "Max length exceeded " + el.value?.toString().length + "/" + el.maxLength
-                                },
-                                pattern: {
-                                    value: /[a-zA-Z]+/,
-                                    message: "eg: aBcDeF"
-                                },
+                                required: el.required,
+                                maxLength: el.maxLength,
+                                pattern: el.pattern,
                                 value: getValues(el.name),
-                                minLength: {
-                                    value: el.minLength || 0,
-                                    "message": "min length should be"
-                                }
+                                minLength: el.minLength
                             })}
                             required={false}
                             error={!!errors[el.name]?.message}

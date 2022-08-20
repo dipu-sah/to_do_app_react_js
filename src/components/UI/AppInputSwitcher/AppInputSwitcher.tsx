@@ -2,6 +2,8 @@ import { AppInputSwitcherProps } from "./AppInputSwitcher.props";
 import { AppTextInputField } from "../AppTextInputField/AppTextInputField";
 import React, {ForwardedRef} from "react";
 import {AppTextInputFieldProps} from "../AppTextInputField/AppTextInputField.props";
+import {AppSelect} from "../AppSelectFields/AppSelectFields";
+import {AppSelectFieldProps} from "../AppSelectFields/AppSelectFieldProps";
 
 export const AppInputSwitcher = React.forwardRef<any, any>(
   AppInputSwitcherComponent
@@ -29,6 +31,7 @@ interface AllFields{
    'time'?:React.ForwardRefExoticComponent<React.PropsWithRef<AppTextInputFieldProps> & React.RefAttributes<HTMLInputElement>> ;
    'url'?:React.ForwardRefExoticComponent<React.PropsWithRef<AppTextInputFieldProps> & React.RefAttributes<HTMLInputElement>> ;
    'week'?:React.ForwardRefExoticComponent<React.PropsWithRef<AppTextInputFieldProps> & React.RefAttributes<HTMLInputElement>> ;
+   'select'?:React.ForwardRefExoticComponent<React.PropsWithRef<AppSelectFieldProps> & React.RefAttributes<HTMLSelectElement>> ;
 }
 type validKeysForFormFields= | 'button'
     | 'checkbox'
@@ -56,12 +59,21 @@ type validKeysForFormFields= | 'button'
 
 
 function AppInputSwitcherComponent(
-  { type, variant, className = "", ...otherProps }: AppInputSwitcherProps,
+  { type, variant, className = "",
+      required,
+      minLength,
+      maxLength,
+      pattern,
+      ...otherProps }: AppInputSwitcherProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
 
   const Fields:AllFields={
     text:AppTextInputField,
+    select:AppSelect,
+  }
+  const PROPS={
+      ...otherProps,
   }
   const InputComponent:React.ForwardRefExoticComponent<React.PropsWithRef<AppTextInputFieldProps> & React.RefAttributes<HTMLInputElement>>  =
       Fields[type as validKeysForFormFields]||AppTextInputField
@@ -69,7 +81,7 @@ function AppInputSwitcherComponent(
 
   return (
     <div className={"h-16 " + className}>
-      <InputComponent type={type} variant={variant} {...otherProps} ref={ref}/>
+      <InputComponent type={type} variant={variant} {...PROPS} ref={ref}/>
     </div>
   );
 }

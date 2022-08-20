@@ -21,16 +21,23 @@ function TaskAddFormComponent(
       type: "text",
       variant: "standard",
       name: "title",
-      required: true,
+      required: {
+        value:true,
+        message:"Please provide a task title"
+      },
       label: "Task Title",
       placeholder: "Task Title",
     },
     {
       type: "text",
-      variant: "standard",
+      variant: "material",
       name: "description",
       label: "Description",
       placeholder: "Description",
+      required:{
+        value: true,
+        message:"No description added"
+      }
     },
   ];
 

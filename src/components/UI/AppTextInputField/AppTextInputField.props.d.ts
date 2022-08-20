@@ -11,4 +11,5 @@ export interface AppTextInputFieldProps
   maxLength?:number;
   minLength?:number;
   value?:string;
+  name:string;
 }
