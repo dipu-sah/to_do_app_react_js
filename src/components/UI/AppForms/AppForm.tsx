@@ -1,6 +1,6 @@
 import React, {
     ChangeEvent,
-    ForwardedRef,
+    ForwardedRef, useEffect,
     useRef,
     useState,
 } from "react";
@@ -18,6 +18,7 @@ function AppFormComponent(
         values,
         children,
         className = "",
+        shouldReset=false,
         onChange = () => {
         },
         onSubmit = () => {
@@ -29,20 +30,25 @@ function AppFormComponent(
     const {formState: {errors}, setValue, getValues, register, handleSubmit,reset} = useForm()
     const [formFieldsStates, setFormFieldsState] =
         useState<AppInputSwitcherProps[]>(formFields || []);
+    const allFieldsKeys=formFieldsStates.reduce((prev: Record<string, string>, el) => {
+        prev[el.name] = ""
+        return prev;
+    }, {});
+    useEffect(()=>{
+        if(shouldReset){
+            reset(allFieldsKeys);
+        }
+    },[shouldReset])
 
     return (
         <form
             className={`flex flex-col gap-4 ${className}`}
             ref={ref}
             onReset={() => {
-                const restFieldsKey=formFieldsStates.reduce((prev: Record<string, string>, el) => {
-                    prev[el.name] = ""
-                    return prev;
-                }, {})
-                reset(restFieldsKey);
+                reset(allFieldsKeys);
             }}
-            onSubmit={handleSubmit((d) => {
-                onSubmit(d)
+            onSubmit={handleSubmit(async(d) => {
+                await onSubmit(d)
             })}
         >
             {formFieldsStates.map((el, index) => {
@@ -51,7 +57,6 @@ function AppFormComponent(
                         key={index}
                         className={`flex flex-col }`}
                     >
-                        {getValues(el.name)}
                         <AppInputSwitcher
                             {...el}
                             label={`${el.label} ${el.required ? "*" : ""}`}

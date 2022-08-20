@@ -9,7 +9,7 @@ export const TaskAddForm = React.forwardRef<HTMLFormElement, TaskAddFromProps>(
 );
 
 function TaskAddFormComponent(
-  { className = "", onSubmit = () => {} }: TaskAddFromProps,
+  { className = "", onSubmit = () => {}, resetForm=false }: TaskAddFromProps,
 ) {
   const [TaskDetails, setTaskDetails] = useState<Record<string, string>>({
     description: "",
@@ -30,7 +30,7 @@ function TaskAddFormComponent(
     },
     {
       type: "text",
-      variant: "material",
+      variant: "standard",
       name: "description",
       label: "Description",
       placeholder: "Description",
@@ -45,9 +45,9 @@ function TaskAddFormComponent(
     <AppForm
       className={"w-11/12 box-border py-8 " +className }
       onSubmit={(e)=>{
-        console.log(e)
         onSubmit(e)
       }}
+      shouldReset={resetForm}
 
       onChange={(e) => {
         setTaskDetails({ ...TaskDetails, ...e });
