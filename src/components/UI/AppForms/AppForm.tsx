@@ -26,7 +26,7 @@ function AppFormComponent(
     ref: ForwardedRef<HTMLFormElement>
 ) {
     const submissionButtonContainer = useRef<any>();
-    const {formState: {errors}, setValue, getValues, register, handleSubmit} = useForm()
+    const {formState: {errors}, setValue, getValues, register, handleSubmit,reset} = useForm()
     const [formFieldsStates, setFormFieldsState] =
         useState<AppInputSwitcherProps[]>(formFields || []);
 
@@ -35,11 +35,11 @@ function AppFormComponent(
             className={`flex flex-col gap-4 ${className}`}
             ref={ref}
             onReset={() => {
-                console.log("HELLO")
-                console.log(formFieldsStates.reduce((prev: Record<string, string>, el) => {
+                const restFieldsKey=formFieldsStates.reduce((prev: Record<string, string>, el) => {
                     prev[el.name] = ""
                     return prev;
-                }, {}))
+                }, {})
+                reset(restFieldsKey);
             }}
             onSubmit={handleSubmit((d) => {
                 onSubmit(d)
@@ -51,6 +51,7 @@ function AppFormComponent(
                         key={index}
                         className={`flex flex-col }`}
                     >
+                        {getValues(el.name)}
                         <AppInputSwitcher
                             {...el}
                             label={`${el.label} ${el.required ? "*" : ""}`}
