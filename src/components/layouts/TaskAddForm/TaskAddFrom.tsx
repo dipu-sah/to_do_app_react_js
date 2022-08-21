@@ -38,7 +38,7 @@ function TaskAddFormComponent({
       label: "Description",
       placeholder: "Description",
       required: {
-        value: true,
+        value: false,
         message: "No description added",
       },
       className: "h-[4.3rem]",
