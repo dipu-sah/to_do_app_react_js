@@ -1,8 +1,14 @@
-import React, {ChangeEvent, ForwardedRef, useEffect, useRef, useState,} from "react";
-import {AppFormProps} from "./AppForm.props";
-import {AppInputSwitcher} from "../AppInputSwitcher/AppInputSwitcher";
-import {AppInputSwitcherProps} from "../AppInputSwitcher/AppInputSwitcher.props";
-import {useForm} from "react-hook-form";
+import React, {
+  ChangeEvent,
+  ForwardedRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { AppFormProps } from "./AppForm.props";
+import { AppInputSwitcher } from "../AppInputSwitcher/AppInputSwitcher";
+import { AppInputSwitcherProps } from "../AppInputSwitcher/AppInputSwitcher.props";
+import { useForm } from "react-hook-form";
 
 export const AppForm = React.forwardRef<
   HTMLFormElement,
@@ -62,7 +68,6 @@ function AppFormComponent(
           <div key={index} className={`flex flex-col }`}>
             <AppInputSwitcher
               {...el}
-                className={"h-16"}
               label={`${el.label} ${el.required ? "*" : ""}`}
               {...register(el.name, {
                 required: el.required,

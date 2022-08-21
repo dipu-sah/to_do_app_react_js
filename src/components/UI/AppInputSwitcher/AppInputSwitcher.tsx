@@ -1,36 +1,36 @@
-import {AppInputSwitcherProps} from "./AppInputSwitcher.props";
-import {AppTextInputField} from "../AppTextInputField/AppTextInputField";
-import React, {ForwardedRef} from "react";
-import {AppSelect} from "../AppSelectFields/AppSelectFields";
-import {AppToggleSwitch} from "../AppToggleSwitch/AppToggleSwitch";
-import {AppCheckBox} from "../AppCheckBox/AppCheckBox";
-import {AppRadioButton} from "../AppRadioButtons/AppRadioButton";
+import { AppInputSwitcherProps } from "./AppInputSwitcher.props";
+import { AppTextInputField } from "../AppTextInputField/AppTextInputField";
+import React, { ForwardedRef } from "react";
+import { AppSelect } from "../AppSelectFields/AppSelectFields";
+import { AppToggleSwitch } from "../AppToggleSwitch/AppToggleSwitch";
+import { AppCheckBox } from "../AppCheckBox/AppCheckBox";
+import { AppRadioButton } from "../AppRadioButtons/AppRadioButton";
 
 export const AppInputSwitcher = React.forwardRef<any, any>(
   AppInputSwitcherComponent
 );
 interface AllFields {
-  button?:any;
+  button?: any;
   checkbox?: any;
-  color?:any;
-  date?:any;
-  "datetime-local"?:any;
-  email?:any;
-  file?:any;
-  hidden?:any;
-  image?:any;
+  color?: any;
+  date?: any;
+  "datetime-local"?: any;
+  email?: any;
+  file?: any;
+  hidden?: any;
+  image?: any;
   month?: any;
   number?: any;
   password?: any;
   radio?: any;
   range?: any;
   reset?: any;
-  search?:any;
-  submit?:any;
+  search?: any;
+  submit?: any;
   tel?: any;
   text?: any;
-  time?:any;
-  url?:any;
+  time?: any;
+  url?: any;
   week?: any;
   select?: any;
   switch?: any;
@@ -78,12 +78,13 @@ function AppInputSwitcherComponent(
     select: AppSelect,
     switch: AppToggleSwitch,
     checkbox: AppCheckBox,
-    radio:AppRadioButton,
+    radio: AppRadioButton,
   };
   const PROPS: typeof otherProps & { checked?: boolean } = {
     ...otherProps,
   };
-  const InputComponent:any = Fields[type as validKeysForFormFields] || AppTextInputField;
+  const InputComponent: any =
+    Fields[type as validKeysForFormFields] || AppTextInputField;
 
   const shouldIncludeChecked: string[] = ["switch", "checkbox"];
   if (shouldIncludeChecked.includes(type.toLowerCase())) {

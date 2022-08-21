@@ -29,6 +29,7 @@ function TaskAddFormComponent({
       },
       label: "Task Title",
       placeholder: "Task Title",
+      className: "h-[4.3rem]",
     },
     {
       type: "text",
@@ -40,6 +41,7 @@ function TaskAddFormComponent({
         value: true,
         message: "No description added",
       },
+      className: "h-[4.3rem]",
     },
   ];
 
