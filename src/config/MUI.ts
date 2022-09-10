@@ -8,6 +8,7 @@ import {
   MuiTextFieldVariantsOverridden,
 } from "./TextFields";
 import { PaletteColorOptions } from "@mui/material/styles/createPalette";
+import { MuiTypographyOverriddenStyles } from "./MuiTypography";
 
 declare module "@mui/material/styles/createPalette" {
   interface PaletteOptions {
@@ -29,6 +30,9 @@ export const MuiTheme = createTheme({
     MuiButton: {
       styleOverrides: MuiButtonStylesOverridden,
       variants: MuiButtonVariantsOverridden,
+    },
+    MuiTypography: {
+      styleOverrides: MuiTypographyOverriddenStyles,
     },
   },
 });

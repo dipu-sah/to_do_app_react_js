@@ -1,5 +1,5 @@
 import { TaskAddFromProps } from "./TaskAddFrom.props";
-import React, { useState } from "react";
+import React, { ForwardedRef, useState } from "react";
 import { AppForm } from "../../UI/AppForms/AppForm";
 import { AppInputSwitcherProps } from "../../UI/AppInputSwitcher/AppInputSwitcher.props";
 import { AppButton } from "../../UI/AppButton/AppButton";
@@ -8,11 +8,10 @@ export const TaskAddForm = React.forwardRef<HTMLFormElement, TaskAddFromProps>(
   TaskAddFormComponent
 );
 
-function TaskAddFormComponent({
-  className = "",
-  onSubmit = () => {},
-  resetForm = false,
-}: TaskAddFromProps) {
+function TaskAddFormComponent(
+  { className = "", onSubmit = () => {}, resetForm = false }: TaskAddFromProps,
+  ref: ForwardedRef<HTMLFormElement>
+) {
   const [TaskDetails, setTaskDetails] = useState<Record<string, string>>({
     description: "",
     title: "",
@@ -29,7 +28,7 @@ function TaskAddFormComponent({
       },
       label: "Task Title",
       placeholder: "Task Title",
-      className: "h-[4.3rem]",
+      className: "h-[4.5rem]",
     },
     {
       type: "text",
@@ -37,16 +36,26 @@ function TaskAddFormComponent({
       name: "description",
       label: "Description",
       placeholder: "Description",
+      className: "h-[4.5rem]",
+    },
+    {
+      type: "date",
+      variant: "standard",
+      name: "dueDate",
+      label: "Due Date",
+      placeholder: "Description",
+      className: "h-[4.5rem]",
       required: {
-        value: false,
-        message: "No description added",
+        value: true,
+        message: "Please provide a valid Date",
       },
-      className: "h-[4.3rem]",
+      disablePast: true,
     },
   ];
 
   return (
     <AppForm
+      ref={ref}
       className={"w-11/12 box-border py-8 " + className}
       onSubmit={(e) => {
         onSubmit(e);

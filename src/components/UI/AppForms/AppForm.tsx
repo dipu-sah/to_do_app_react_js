@@ -9,6 +9,7 @@ import { AppFormProps } from "./AppForm.props";
 import { AppInputSwitcher } from "../AppInputSwitcher/AppInputSwitcher";
 import { AppInputSwitcherProps } from "../AppInputSwitcher/AppInputSwitcher.props";
 import { useForm } from "react-hook-form";
+import { Typography } from "@mui/material";
 
 export const AppForm = React.forwardRef<
   HTMLFormElement,
@@ -35,7 +36,10 @@ function AppFormComponent(
     register,
     handleSubmit,
     reset,
-  } = useForm();
+  } = useForm({
+    mode: "onBlur",
+    reValidateMode: "onSubmit",
+  });
   const [formFieldsStates, setFormFieldsState] = useState<
     AppInputSwitcherProps[]
   >(formFields || []);
@@ -59,16 +63,16 @@ function AppFormComponent(
       onReset={() => {
         reset(allFieldsKeys);
       }}
-      onSubmit={handleSubmit(async (d) => {
-        await onSubmit(d);
+      onSubmit={handleSubmit((d) => {
+        onSubmit(d);
       })}
     >
-      {formFieldsStates.map((el, index) => {
+      {formFieldsStates.map((el: AppInputSwitcherProps, index: number) => {
         return (
           <div key={index} className={`flex flex-col }`}>
             <AppInputSwitcher
-              {...el}
               label={`${el.label} ${el.required ? "*" : ""}`}
+              {...el}
               {...register(el.name, {
                 required: el.required,
                 maxLength: el.maxLength,
@@ -90,9 +94,11 @@ function AppFormComponent(
               }}
             />
             {errors[el.name]?.message && (
-              <p className={"bg-red-300 text-red-800 w-full box-border px-4"}>
-                {errors[el.name]?.message?.toString()}
-              </p>
+              <div className={"w-full box-border"}>
+                <Typography color={"error"} className={"text-sm"}>
+                  {errors[el.name]?.message?.toString()}
+                </Typography>
+              </div>
             )}
           </div>
         );

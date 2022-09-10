@@ -14,18 +14,21 @@ function HomePageComponent() {
   const [tasksToShow, setTasksToShow] = useState<Task[]>([]);
   const [notCompletedOnly, setNotCompletedOnly] = useState<boolean>(true);
   useEffect(() => {
+    // 2 variables 4 condition TT,TF,FT and FF
     if (notCompletedOnly && completedOnly) {
+      //TT
       setTasksToShow(allTasks.filter((el) => true));
     } else if (completedOnly && !notCompletedOnly) {
+      //TF
       setTasksToShow(allTasks.filter((el) => !!el.isCompleted));
     } else if (notCompletedOnly && !completedOnly) {
+      //FT
       setTasksToShow(allTasks.filter((el) => !el.isCompleted));
     } else {
+      //FF
       setTasksToShow(allTasks.filter((el) => true));
     }
-    if (allTasks.length) {
-      localStorage.setItem("allTasks", JSON.stringify(allTasks));
-    }
+    localStorage.setItem("allTasks", JSON.stringify(allTasks));
   }, [completedOnly, allTasks, notCompletedOnly]);
   useEffect(() => {
     const allTasksListLocalStorage: Task[] =
@@ -109,6 +112,14 @@ function HomePageComponent() {
               Not Completed Only
             </ToggleButton>
           </div>
+          <AppInputSwitcher
+            type={"autoComplete"}
+            label="Search Task By Title"
+            name="ABC"
+            options={allTasks.map((e) => {
+              return e.title;
+            })}
+          />
           {tasksToShow.map((el, index) => {
             return (
               <AppCard key={index} className={""}>
@@ -140,13 +151,14 @@ function HomePageComponent() {
                     {el.isCompleted && (
                       <s className={"text-xs uppercase grow"}>{el.title}</s>
                     )}
+                    {JSON.stringify(el)}
                   </span>
                   <AppButton
                     className={"w-fit"}
                     color={"error"}
                     variant={"text"}
                     onClick={() => {
-                      deleteTask(index);
+                      deleteTask(el.id);
                     }}
                   >
                     <DeleteTwoTone />

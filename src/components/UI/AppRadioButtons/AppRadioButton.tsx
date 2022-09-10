@@ -1,6 +1,12 @@
-import {FormControlLabel, Radio, RadioGroup, RadioGroupProps, RadioProps,} from "@mui/material";
-import {Controller, useForm} from "react-hook-form";
-import {iFromOptions} from "../../../@types/formFields";
+import {
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  RadioGroupProps,
+  RadioProps,
+} from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
+import { iFromOptions } from "../../../@types/formFields";
 
 export function AppRadioButton({
   variant = "standard",
@@ -17,10 +23,7 @@ export function AppRadioButton({
       control={control}
       name={props.name || ""}
       render={() => (
-        <RadioGroup
-          value={value}
-          {...(props as RadioGroupProps)}
-        >
+        <RadioGroup value={value} {...(props as RadioGroupProps)}>
           {options.map(({ value, label }: iFromOptions, index) => {
             return (
               <FormControlLabel

@@ -18,7 +18,7 @@ export const MuiTextFieldVariantsOverridden: ComponentsVariants["MuiTextField"] 
           transition: "none",
           width: "100%",
           fontSize: "0.9rem",
-          height: "2rem",
+          height: "fit-content",
           transform: "none",
           position: "unset",
         },
@@ -28,10 +28,13 @@ export const MuiTextFieldVariantsOverridden: ComponentsVariants["MuiTextField"] 
           position: "unset ",
           height: "100%",
           content: "unset",
-          border: "0 !important",
+          border: "0",
+          "&:after,&:before,&:hover:not(.Mui-disabled)::before": {
+            border: "0",
+          },
         },
         "& .MuiInputBase-input": {
-          borderRadius: "0.1rem",
+          borderRadius: "0.3rem",
           grow: "1",
           position: "relative",
           backgroundColor:
@@ -39,7 +42,8 @@ export const MuiTextFieldVariantsOverridden: ComponentsVariants["MuiTextField"] 
           border: "1px solid #ced4da",
           width: "100%",
           padding: "0",
-          height: "100%",
+          minHeight: "3rem",
+          maxHeight: "100%",
           transition: "none",
           transform: "none",
           // Use the system font instead of the default Roboto font.
