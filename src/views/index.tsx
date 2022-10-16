@@ -98,7 +98,7 @@ function HomePageComponent() {
         type={"autoComplete"}
         label="Search Task By Title"
         name="ABC"
-        options={...allTasks.map((e, index) => {
+        options={allTasks.map((e, index) => {
           return {
             value: index,
             label: e.title,
