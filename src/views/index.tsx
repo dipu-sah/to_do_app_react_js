@@ -5,12 +5,28 @@ import { AppCard } from "../components/UI/AppCard/AppCard";
 import { CardContent, ToggleButton } from "@mui/material";
 import { AppInputSwitcher } from "../components/UI/AppInputSwitcher/AppInputSwitcher";
 import { iSingleOption } from "../@types/Options";
+import { AppButton } from "../components/UI/AppButton/AppButton";
+import { DeleteTwoTone } from "@mui/icons-material";
 
 function HomePageComponent() {
   const [allTasks, setAllTasks] = useState<Task[]>([
     {
-      id: 21,
-      title: "TEST",
+      id: Date.now(),
+
+      title: "TEST-1",
+      isCompleted: false,
+      description: "THIS IS THE DESCRIPTION",
+    },
+    {
+      id: Date.now(),
+
+      title: "TEST-2",
+      isCompleted: false,
+      description: "THIS IS THE DESCRIPTION",
+    },
+    {
+      id: Date.now(),
+      title: "TEST-3",
       isCompleted: false,
       description: "THIS IS THE DESCRIPTION",
     },
@@ -105,7 +121,7 @@ function HomePageComponent() {
           };
         })}
         onChange={(e: iSingleOption) => {
-          console.log(e);
+          setTasksToShow([allTasks[parseInt(e.value || "0")]]);
         }}
       />
       <AppCard className={"w-full"}>
@@ -138,57 +154,59 @@ function HomePageComponent() {
               </ToggleButton>
             </div>
 
-            {/*{tasksToShow.filter((el, index) => {*/}
-            {/*  return (*/}
-            {/*    el.title.includes(showTaskOfTitle) && (*/}
-            {/*      <AppCard key={index} className={""}>*/}
-            {/*        <CardContent*/}
-            {/*          className={*/}
-            {/*            "flex flex-row justify-center items-center gap-2 bg-green-200 cursor-pointer"*/}
-            {/*          }*/}
-            {/*        >*/}
-            {/*          <AppInputSwitcher*/}
-            {/*            onClick={() => toggleCompletedStatus(el.id)}*/}
-            {/*            type={"radio"}*/}
-            {/*            title={"is completed"}*/}
-            {/*            variant={"material"}*/}
-            {/*            options={[*/}
-            {/*              {*/}
-            {/*                value: true,*/}
-            {/*                label: "",*/}
-            {/*              },*/}
-            {/*            ]}*/}
-            {/*            value={!!el.isCompleted}*/}
-            {/*          />*/}
-            {/*          <span*/}
-            {/*            className={"grow"}*/}
-            {/*            onClick={() => toggleCompletedStatus(el.id)}*/}
-            {/*          >*/}
-            {/*            {!el.isCompleted && (*/}
-            {/*              <h2 className={"text-xs uppercase grow"}>*/}
-            {/*                {el.title}*/}
-            {/*              </h2>*/}
-            {/*            )}*/}
-            {/*            {el.isCompleted && (*/}
-            {/*              <s className={"text-xs uppercase grow"}>{el.title}</s>*/}
-            {/*            )}*/}
-            {/*            {JSON.stringify(el)}*/}
-            {/*          </span>*/}
-            {/*          <AppButton*/}
-            {/*            className={"w-fit"}*/}
-            {/*            color={"error"}*/}
-            {/*            variant={"text"}*/}
-            {/*            onClick={() => {*/}
-            {/*              deleteTask(el.id);*/}
-            {/*            }}*/}
-            {/*          >*/}
-            {/*            <DeleteTwoTone />*/}
-            {/*          </AppButton>*/}
-            {/*        </CardContent>*/}
-            {/*      </AppCard>*/}
-            {/*    )*/}
-            {/*  );*/}
-            {/*})}*/}
+            {tasksToShow
+              .filter((el, index) => {
+                return el.title.includes(showTaskOfTitle);
+              })
+              .map((el, index) => {
+                return (
+                  <AppCard key={index} className={""}>
+                    <CardContent
+                      className={
+                        "flex flex-row justify-center items-center gap-2 bg-green-200 cursor-pointer"
+                      }
+                    >
+                      <AppInputSwitcher
+                        onClick={() => toggleCompletedStatus(el.id)}
+                        type={"radio"}
+                        title={"is completed"}
+                        variant={"material"}
+                        options={[
+                          {
+                            value: true,
+                            label: "",
+                          },
+                        ]}
+                        value={!!el.isCompleted}
+                      />
+                      <span
+                        className={"grow"}
+                        onClick={() => toggleCompletedStatus(el.id)}
+                      >
+                        {!el.isCompleted && (
+                          <h2 className={"text-xs uppercase grow"}>
+                            {el.title}
+                          </h2>
+                        )}
+                        {el.isCompleted && (
+                          <s className={"text-xs uppercase grow"}>{el.title}</s>
+                        )}
+                        {JSON.stringify(el)}
+                      </span>
+                      <AppButton
+                        className={"w-fit"}
+                        color={"error"}
+                        variant={"text"}
+                        onClick={() => {
+                          deleteTask(el.id);
+                        }}
+                      >
+                        <DeleteTwoTone />
+                      </AppButton>
+                    </CardContent>
+                  </AppCard>
+                );
+              })}
           </>
         </CardContent>
       </AppCard>

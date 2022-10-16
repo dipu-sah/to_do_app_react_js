@@ -6,7 +6,7 @@ import {
   RadioProps,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { iFromOptions } from "../../../@types/formFields";
+import { SingleOption } from "../../../@types/Options";
 
 export function AppRadioButton({
   variant = "standard",
@@ -15,7 +15,7 @@ export function AppRadioButton({
   ...props
 }: RadioProps & {
   variant?: "standard" | "material";
-  options?: iFromOptions[];
+  options?: SingleOption[];
 }) {
   const { control } = useForm();
   return (
@@ -24,7 +24,16 @@ export function AppRadioButton({
       name={props.name || ""}
       render={() => (
         <RadioGroup value={value} {...(props as RadioGroupProps)}>
-          {options.map(({ value, label }: iFromOptions, index) => {
+          {options.map((e: SingleOption, index) => {
+            let label = "";
+            let value: string | undefined = "";
+            if (typeof e === "string") {
+              label = e;
+              value = e;
+            } else {
+              label = e.label;
+              value = e.value;
+            }
             return (
               <FormControlLabel
                 value={value}
