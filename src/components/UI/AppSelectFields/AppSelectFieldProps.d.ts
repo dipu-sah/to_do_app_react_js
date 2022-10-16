@@ -1,7 +1,7 @@
 import { SelectProps } from "@mui/material";
-import { iFromOptions } from "../../../@types/formFields";
+import { SingleOption } from "../../../@types/Options";
 
-export interface AppSelectFieldProps extends SelectProps {
+export interface AppSelectFieldProps extends SelectProps<string> {
   name: string;
-  options?: iFromOptions[];
+  options?: SingleOption[];
 }

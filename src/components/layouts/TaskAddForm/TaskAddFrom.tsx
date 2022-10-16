@@ -56,7 +56,7 @@ function TaskAddFormComponent(
   return (
     <AppForm
       ref={ref}
-      className={"w-11/12 box-border py-8 " + className}
+      className={className}
       onSubmit={(e) => {
         onSubmit(e);
       }}

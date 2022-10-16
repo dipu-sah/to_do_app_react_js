@@ -1,7 +1,7 @@
-export type SingleOption =
-  | string
-  | {
-      value?: string;
-      label: string;
-    };
+export interface iSingleOption {
+  value?: string;
+  label: string;
+}
+
+export type SingleOption = iSingleOption | string;
 export type OptionsArray = SingleOption[];

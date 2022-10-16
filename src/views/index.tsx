@@ -4,15 +4,22 @@ import { Task } from "../@types/DTO/requests/Tasks";
 import { AppCard } from "../components/UI/AppCard/AppCard";
 import { CardContent, ToggleButton } from "@mui/material";
 import { AppInputSwitcher } from "../components/UI/AppInputSwitcher/AppInputSwitcher";
-import { AppButton } from "../components/UI/AppButton/AppButton";
-import { DeleteTwoTone } from "@mui/icons-material";
+import { iSingleOption } from "../@types/Options";
 
 function HomePageComponent() {
-  const [allTasks, setAllTasks] = useState<Task[]>([]);
+  const [allTasks, setAllTasks] = useState<Task[]>([
+    {
+      id: 21,
+      title: "TEST",
+      isCompleted: false,
+      description: "THIS IS THE DESCRIPTION",
+    },
+  ]);
   const [restForm, setResetForm] = useState<boolean>(false);
   const [completedOnly, setCompletedOnly] = React.useState(false);
   const [tasksToShow, setTasksToShow] = useState<Task[]>([]);
   const [notCompletedOnly, setNotCompletedOnly] = useState<boolean>(true);
+  const [showTaskOfTitle, setShowTaskOfTitle] = useState<string>("");
   useEffect(() => {
     // 2 variables 4 condition TT,TF,FT and FF
     if (notCompletedOnly && completedOnly) {
@@ -57,6 +64,7 @@ function HomePageComponent() {
       return e.id === id;
     });
   }
+
   function deleteTask(id: number) {
     const tempAllTasks: Task[] = JSON.parse(JSON.stringify(allTasks));
     const taskIndex: number = getIndexById(id);
@@ -72,101 +80,116 @@ function HomePageComponent() {
         "h-full w-full flex flex-col justify-center items-center h-full"
       }
     >
-      <TaskAddForm
-        className={"w-1/2 flex flex-col gap-4 box-border py-2"}
-        resetForm={restForm}
-        onSubmit={async (e) => {
-          await setAllTasks([
-            ...allTasks,
-            { title: "", ...e, id: Date.now() } as Task,
-          ]);
-          await setResetForm(true);
-          setResetForm(false);
+      <div className={"w-11/12"}>
+        <TaskAddForm
+          resetForm={restForm}
+          onSubmit={async (e) => {
+            await setAllTasks([
+              ...allTasks,
+              { title: "", ...e, id: Date.now() } as Task,
+            ]);
+            await setResetForm(true);
+            setResetForm(false);
+          }}
+        />
+      </div>
+      <AppInputSwitcher
+        className=" w-full "
+        type={"autoComplete"}
+        label="Search Task By Title"
+        name="ABC"
+        options={...allTasks.map((e, index) => {
+          return {
+            value: index,
+            label: e.title,
+          };
+        })}
+        onChange={(e: iSingleOption) => {
+          console.log(e);
         }}
       />
       <AppCard className={"w-full"}>
         <CardContent className={"bg-red-200 flex flex-col gap-4 rounded-lg"}>
-          <div className={"flex flex-row flex-wrap gap-2"}>
-            <ToggleButton
-              className={"w-fit"}
-              value={true}
-              selected={completedOnly}
-              onChange={() => {
-                setCompletedOnly(!completedOnly);
-              }}
-              color={"success"}
-            >
-              Completed only
-            </ToggleButton>
+          <>
+            <div className={"flex flex-row flex-wrap gap-2"}>
+              <ToggleButton
+                className={"w-fit"}
+                value={true}
+                selected={completedOnly}
+                onChange={() => {
+                  setCompletedOnly(!completedOnly);
+                }}
+                color={"success"}
+              >
+                Completed only
+              </ToggleButton>
 
-            <ToggleButton
-              className={"w-fit"}
-              size={"small"}
-              value={true}
-              selected={notCompletedOnly}
-              onChange={() => {
-                setNotCompletedOnly(!notCompletedOnly);
-              }}
-              color={"success"}
-            >
-              Not Completed Only
-            </ToggleButton>
-          </div>
-          <AppInputSwitcher
-            type={"autoComplete"}
-            label="Search Task By Title"
-            name="ABC"
-            options={allTasks.map((e) => {
-              return e.title;
-            })}
-          />
-          {tasksToShow.map((el, index) => {
-            return (
-              <AppCard key={index} className={""}>
-                <CardContent
-                  className={
-                    "flex flex-row justify-center items-center gap-2 bg-green-200 cursor-pointer"
-                  }
-                >
-                  <AppInputSwitcher
-                    onClick={() => toggleCompletedStatus(el.id)}
-                    type={"radio"}
-                    title={"is completed"}
-                    variant={"material"}
-                    options={[
-                      {
-                        value: true,
-                        label: "",
-                      },
-                    ]}
-                    value={!!el.isCompleted}
-                  />
-                  <span
-                    className={"grow"}
-                    onClick={() => toggleCompletedStatus(el.id)}
-                  >
-                    {!el.isCompleted && (
-                      <h2 className={"text-xs uppercase grow"}>{el.title}</h2>
-                    )}
-                    {el.isCompleted && (
-                      <s className={"text-xs uppercase grow"}>{el.title}</s>
-                    )}
-                    {JSON.stringify(el)}
-                  </span>
-                  <AppButton
-                    className={"w-fit"}
-                    color={"error"}
-                    variant={"text"}
-                    onClick={() => {
-                      deleteTask(el.id);
-                    }}
-                  >
-                    <DeleteTwoTone />
-                  </AppButton>
-                </CardContent>
-              </AppCard>
-            );
-          })}
+              <ToggleButton
+                className={"w-fit"}
+                size={"small"}
+                value={true}
+                selected={notCompletedOnly}
+                onChange={() => {
+                  setNotCompletedOnly(!notCompletedOnly);
+                }}
+                color={"success"}
+              >
+                Not Completed Only
+              </ToggleButton>
+            </div>
+
+            {/*{tasksToShow.filter((el, index) => {*/}
+            {/*  return (*/}
+            {/*    el.title.includes(showTaskOfTitle) && (*/}
+            {/*      <AppCard key={index} className={""}>*/}
+            {/*        <CardContent*/}
+            {/*          className={*/}
+            {/*            "flex flex-row justify-center items-center gap-2 bg-green-200 cursor-pointer"*/}
+            {/*          }*/}
+            {/*        >*/}
+            {/*          <AppInputSwitcher*/}
+            {/*            onClick={() => toggleCompletedStatus(el.id)}*/}
+            {/*            type={"radio"}*/}
+            {/*            title={"is completed"}*/}
+            {/*            variant={"material"}*/}
+            {/*            options={[*/}
+            {/*              {*/}
+            {/*                value: true,*/}
+            {/*                label: "",*/}
+            {/*              },*/}
+            {/*            ]}*/}
+            {/*            value={!!el.isCompleted}*/}
+            {/*          />*/}
+            {/*          <span*/}
+            {/*            className={"grow"}*/}
+            {/*            onClick={() => toggleCompletedStatus(el.id)}*/}
+            {/*          >*/}
+            {/*            {!el.isCompleted && (*/}
+            {/*              <h2 className={"text-xs uppercase grow"}>*/}
+            {/*                {el.title}*/}
+            {/*              </h2>*/}
+            {/*            )}*/}
+            {/*            {el.isCompleted && (*/}
+            {/*              <s className={"text-xs uppercase grow"}>{el.title}</s>*/}
+            {/*            )}*/}
+            {/*            {JSON.stringify(el)}*/}
+            {/*          </span>*/}
+            {/*          <AppButton*/}
+            {/*            className={"w-fit"}*/}
+            {/*            color={"error"}*/}
+            {/*            variant={"text"}*/}
+            {/*            onClick={() => {*/}
+            {/*              deleteTask(el.id);*/}
+            {/*            }}*/}
+            {/*          >*/}
+            {/*            <DeleteTwoTone />*/}
+            {/*          </AppButton>*/}
+            {/*        </CardContent>*/}
+            {/*      </AppCard>*/}
+            {/*    )*/}
+            {/*  );*/}
+            {/*})}*/}
+          </>
         </CardContent>
       </AppCard>
     </div>
