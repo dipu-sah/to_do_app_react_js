@@ -8,6 +8,12 @@ import { ThemeProvider } from "@mui/material";
 import { MuiTheme } from "./config/MUI";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "http://localhost:8000/graphql/",
+  cache: new InMemoryCache(),
+});
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -16,7 +22,9 @@ root.render(
     <ThemeProvider theme={MuiTheme}>
       <BrowserRouter>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <App />
+          <ApolloProvider client={client}>
+            <App />
+          </ApolloProvider>
         </LocalizationProvider>
       </BrowserRouter>
     </ThemeProvider>

@@ -7,6 +7,7 @@ import {
 import { ReactElement, useState } from "react";
 import { HomePage } from "../views";
 import { Test } from "../views/test";
+import { LoginPage } from "../views/login";
 
 export function AllAvailableRouter() {
   const currentRoute = useLocation();
@@ -27,6 +28,10 @@ export function AllAvailableRouter() {
     {
       element: <Test />,
       path: "/test",
+    },
+    {
+      element: <LoginPage />,
+      path: "/login",
     },
   ];
   setTimeout(() => {

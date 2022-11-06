@@ -114,6 +114,7 @@ function HomePageComponent() {
         type={"autoComplete"}
         label="Search Task By Title"
         name="ABC"
+        multiple={true}
         options={allTasks.map((e, index) => {
           return {
             value: index,
