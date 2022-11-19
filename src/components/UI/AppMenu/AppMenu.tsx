@@ -21,7 +21,7 @@ export function AppMenu({
     >
       {menuItems?.map((e, index) => {
         return (
-          <MenuItem {...e}>
+          <MenuItem {...e} key={index}>
             <>
               {e.icon && (
                 <ListItemIcon>{e.icon ? e.icon : <span></span>}</ListItemIcon>

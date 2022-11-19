@@ -1,7 +1,7 @@
 import { AppMenu } from "../../UI/AppMenu/AppMenu";
 import { useRef, useState } from "react";
 import { AppMenuProps } from "../../UI/AppMenu/AppMenuProps";
-import { DeleteForever } from "@mui/icons-material";
+import { DeleteForever, EditOutlined } from "@mui/icons-material";
 import { TaskPreviewCardProps } from "./TaskPreviewCardProps";
 import CheckIcon from "@mui/icons-material/Check";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -29,7 +29,6 @@ export function TaskPreviewCard({
     <div
       onClick={() => {
         setOpenMenuTo(null);
-        console.log("pe");
       }}
       ref={rootContainer}
       onContextMenu={(e) => {
@@ -41,13 +40,15 @@ export function TaskPreviewCard({
         });
       }}
       className={
-        "w-full mx-h-fit rounded-lg box-border p-2 text-white" +
-        " flex flex-col gap-2 cursor-default" +
+        "w-full mx-h-fit rounded-lg box-border p-2" +
+        " flex flex-col gap-2" +
         " " +
         parentClass
       }
     >
-      <header className={"flex flex-row"}>
+      <header
+        className={"flex flex-row border-b-[0px] border-solid border-white"}
+      >
         <AppTooltip title={"Title of the task"}>
           <h2 className={"font-bold text-2xl line-clamp-1 grow"}>{title}</h2>
         </AppTooltip>
@@ -81,7 +82,7 @@ export function TaskPreviewCard({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            setMenuPos({ top: e.pageY, left: e.pageX });
+            setMenuPos({ top: e.clientY, left: e.clientX });
             setOpenMenuTo(e.currentTarget);
           }}
         >
@@ -100,6 +101,11 @@ export function TaskPreviewCard({
             onClick: (e) => {
               onTaskDelete(id);
             },
+          },
+          {
+            label: "Edit this task",
+            icon: <EditOutlined />,
+            onClick: (e) => {},
           },
         ]}
       />
