@@ -7,5 +7,8 @@ export interface AppMenuProps {
   onClose: () => void;
   anchorEl: PopoverProps["anchorEl"];
   position?: { top: number; left: number };
-  menuItems?: (MenuItemProps & { label: string; icon?: ReactNode })[];
+  menuItems?: (MenuItemProps & {
+    label: string;
+    icon?: ReactNode;
+  })[];
 }

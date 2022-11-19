@@ -6,6 +6,7 @@ import { TaskPreviewCardProps } from "./TaskPreviewCardProps";
 import CheckIcon from "@mui/icons-material/Check";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AppButton } from "../../UI/AppButton/AppButton";
+import { AppTooltip } from "../../UI/Tooltip/AppTooltip";
 
 export function TaskPreviewCard({
   description,
@@ -41,14 +42,17 @@ export function TaskPreviewCard({
       }}
       className={
         "w-full mx-h-fit rounded-lg box-border p-2 text-white" +
-        " flex flex-col gap-2" +
+        " flex flex-col gap-2 cursor-default" +
         " " +
         parentClass
       }
     >
       <header className={"flex flex-row"}>
-        <h2 className={"font-bold text-2xl line-clamp-1 grow"}>{title}</h2>
+        <AppTooltip title={"Title of the task"}>
+          <h2 className={"font-bold text-2xl line-clamp-1 grow"}>{title}</h2>
+        </AppTooltip>
         <AppButton
+          title={isCompleted ? "Mark as uncompleted" : "Mark as Completed"}
           iconOnly={true}
           onClick={() => {
             onTaskUpdate({
@@ -60,7 +64,6 @@ export function TaskPreviewCard({
           }}
         >
           <CheckIcon
-            titleAccess={"Toggle status of task"}
             color={isCompleted ? "success" : "error"}
             sx={{
               backgroundColor: "white",
@@ -72,6 +75,7 @@ export function TaskPreviewCard({
           />
         </AppButton>
         <AppButton
+          title={"More options"}
           iconOnly={true}
           className={"w-fit"}
           onClick={(e) => {
@@ -91,20 +95,23 @@ export function TaskPreviewCard({
         position={menuPos}
         menuItems={[
           {
-            label: "Delete",
-            icon: <DeleteForever />,
+            label: "Delete this task",
+            icon: <DeleteForever color={"error"} />,
             onClick: (e) => {
               onTaskDelete(id);
             },
           },
         ]}
       />
-      <main
-        className={"text-sm line-clamp-5 h-24 text-justify " + descriptionClass}
-      >
-        {id}
-        {description}
-      </main>
+      <AppTooltip title={"Description of the task"}>
+        <main
+          className={
+            "text-sm line-clamp-5 h-24 text-justify " + descriptionClass
+          }
+        >
+          {description}
+        </main>
+      </AppTooltip>
       <footer></footer>
     </div>
   );

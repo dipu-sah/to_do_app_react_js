@@ -21,11 +21,13 @@ export function AppMenu({
     >
       {menuItems?.map((e, index) => {
         return (
-          <MenuItem {...e} key={index}>
-            {e.icon && (
-              <ListItemIcon>{e.icon ? e.icon : <span></span>}</ListItemIcon>
-            )}
-            <ListItemText> {e.label}</ListItemText>
+          <MenuItem {...e}>
+            <>
+              {e.icon && (
+                <ListItemIcon>{e.icon ? e.icon : <span></span>}</ListItemIcon>
+              )}
+              <ListItemText>{e.label}</ListItemText>
+            </>
           </MenuItem>
         );
       })}
