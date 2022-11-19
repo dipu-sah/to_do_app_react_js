@@ -13,6 +13,9 @@ export function TaskPreviewCard({
   title,
   parentClass = "",
   descriptionClass = "",
+  onTaskUpdate = () => {},
+  onTaskDelete = () => {},
+  id,
 }: TaskPreviewCardProps): JSX.Element {
   const rootContainer = useRef<HTMLDivElement | null>(null);
   const [openMenuTo, setOpenMenuTo] = useState<null | Element>(
@@ -23,10 +26,13 @@ export function TaskPreviewCard({
 
   return (
     <div
+      onClick={() => {
+        setOpenMenuTo(null);
+        console.log("pe");
+      }}
       ref={rootContainer}
       onContextMenu={(e) => {
         e.preventDefault();
-        setOpenMenuTo(null);
         setOpenMenuTo(openMenuTo == null ? e.currentTarget : null);
         setMenuPos({
           top: e.clientY,
@@ -42,7 +48,17 @@ export function TaskPreviewCard({
     >
       <header className={"flex flex-row"}>
         <h2 className={"font-bold text-2xl line-clamp-1 grow"}>{title}</h2>
-        <AppButton variant={"text"}>
+        <AppButton
+          iconOnly={true}
+          onClick={() => {
+            onTaskUpdate({
+              id: id,
+              title: title,
+              description: description,
+              isCompleted: !isCompleted,
+            });
+          }}
+        >
           <CheckIcon
             titleAccess={"Toggle status of task"}
             color={isCompleted ? "success" : "error"}
@@ -55,8 +71,17 @@ export function TaskPreviewCard({
             }}
           />
         </AppButton>
-        <AppButton className={"bg-transparent"}>
-          <MoreVertIcon />
+        <AppButton
+          iconOnly={true}
+          className={"w-fit"}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setMenuPos({ top: e.pageY, left: e.pageX });
+            setOpenMenuTo(e.currentTarget);
+          }}
+        >
+          <MoreVertIcon sx={{ color: "white" }} />
         </AppButton>
       </header>
       <AppMenu
@@ -64,11 +89,20 @@ export function TaskPreviewCard({
         onClose={() => {}}
         anchorEl={openMenuTo}
         position={menuPos}
-        menuItems={[{ label: "Delete", icon: <DeleteForever /> }]}
+        menuItems={[
+          {
+            label: "Delete",
+            icon: <DeleteForever />,
+            onClick: (e) => {
+              onTaskDelete(id);
+            },
+          },
+        ]}
       />
       <main
         className={"text-sm line-clamp-5 h-24 text-justify " + descriptionClass}
       >
+        {id}
         {description}
       </main>
       <footer></footer>

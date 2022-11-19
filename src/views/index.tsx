@@ -3,23 +3,25 @@ import { Task } from "../@types/DTO/requests/Tasks";
 import { TaskList } from "../components/layouts/TaskList/TaskList";
 
 function HomePageComponent() {
+  function getRandomId() {
+    return Date.now() + Math.ceil(Math.random() * 10000);
+  }
+
   const [allTasks, setAllTasks] = useState<Task[]>([
     {
-      id: Date.now(),
-
+      id: getRandomId(),
       title: "TEST-1",
       isCompleted: false,
       description: "THIS IS THE DESCRIPTION",
     },
     {
-      id: Date.now(),
-
+      id: getRandomId(),
       title: "TEST-2",
       isCompleted: false,
       description: "THIS IS THE DESCRIPTION",
     },
     {
-      id: Date.now(),
+      id: getRandomId(),
       title: "TEST-3",
       isCompleted: false,
       description: "THIS IS THE DESCRIPTION",
@@ -69,15 +71,31 @@ function HomePageComponent() {
     }
   }
 
+  function updateTaskUpIndex(updateDetails: Task, taskIndex: number) {
+    const tempAllTasks: Task[] = JSON.parse(JSON.stringify(allTasks));
+    if (taskIndex > -1 && taskIndex < tempAllTasks.length) {
+      tempAllTasks[taskIndex] = updateDetails;
+      setAllTasks([...tempAllTasks]);
+    }
+  }
+
   function getIndexById(id: number, tempAllTasks: Task[] = allTasks): number {
     return tempAllTasks.findIndex((e: Task) => {
       return e.id === id;
     });
   }
 
-  function deleteTask(id: number) {
+  function deleteTaskById(id: number) {
     const tempAllTasks: Task[] = JSON.parse(JSON.stringify(allTasks));
     const taskIndex: number = getIndexById(id);
+    if (taskIndex > -1 && taskIndex < tempAllTasks.length) {
+      tempAllTasks.splice(taskIndex, 1);
+      setAllTasks(tempAllTasks);
+    }
+  }
+
+  function deleteTaskByIndex(taskIndex: number) {
+    const tempAllTasks: Task[] = JSON.parse(JSON.stringify(allTasks));
     if (taskIndex > -1 && taskIndex < tempAllTasks.length) {
       tempAllTasks.splice(taskIndex, 1);
       setAllTasks(tempAllTasks);
@@ -90,7 +108,15 @@ function HomePageComponent() {
         "h-full w-full justify-center items-center h-full box-border p-2 gap-4 flex flex-row"
       }
     >
-      <TaskList allTasks={allTasks} />
+      <TaskList
+        allTasks={allTasks}
+        onTaskUpdate={(updatedTaskDetails, index) => {
+          updateTaskUpIndex(updatedTaskDetails, index);
+        }}
+        onTaskDelete={(index) => {
+          deleteTaskByIndex(index);
+        }}
+      />
     </div>
   );
 }

@@ -3,4 +3,5 @@ import { ReactNode } from "react";
 
 export interface AppButtonProps extends ButtonProps {
   children?: string | ReactNode;
+  iconOnly?: boolean;
 }
