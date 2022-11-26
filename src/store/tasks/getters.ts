@@ -12,9 +12,14 @@ function getSpecificKeyFromTaskState<T>(
 }
 
 export const TaskGetters = {
-  getAllTasks(): TaskStates["allTasks"] {
-    return useSelector<TaskStates, TaskStates["allTasks"]>((currentState) =>
-      getSpecificKeyFromTaskState<Task[]>("allTasks", currentState, [])
+  getAllTasks(): Task[] {
+    return useSelector<TaskStates, Task[]>((currentState) =>
+      getSpecificKeyFromTaskState<Task[]>("allTasks", currentState, []).map(
+        (el) => ({
+          ...el,
+          dueDate: new Date(el.dueDate),
+        })
+      )
     );
   },
   getTaskById(id: number): Task | undefined {

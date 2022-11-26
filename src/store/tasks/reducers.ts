@@ -7,10 +7,18 @@ export const taskReducers = {
     currentState: TaskStates,
     actionData: PayloadAction<Task[]>
   ) {
-    currentState.allTasks = actionData.payload;
+    currentState.allTasks = actionData.payload.map((e) => {
+      return {
+        ...e,
+        dueDate: e.dueDate.toLocaleDateString(),
+      };
+    });
   },
   addNewTask(currentState: TaskStates, payload: PayloadAction<Task>) {
-    currentState.allTasks.push(payload.payload);
+    currentState.allTasks.push({
+      ...payload.payload,
+      dueDate: payload.payload.dueDate.toLocaleDateString(),
+    });
   },
   deleteTaskByIndex(
     currentState: TaskStates,
@@ -37,7 +45,10 @@ export const taskReducers = {
       (e) => e.id == actionData.payload.id
     );
     if (index >= 0) {
-      currentState.allTasks.splice(index, 1, actionData.payload.newTaskDetails);
+      currentState.allTasks.splice(index, 1, {
+        ...actionData.payload.newTaskDetails,
+        dueDate: actionData.payload.newTaskDetails.dueDate.toLocaleDateString(),
+      });
     }
   },
   updateTaskByIndex(
@@ -47,10 +58,9 @@ export const taskReducers = {
       newTaskDetails: Task;
     }>
   ) {
-    currentState.allTasks.splice(
-      actionData.payload.index,
-      1,
-      actionData.payload.newTaskDetails
-    );
+    currentState.allTasks.splice(actionData.payload.index, 1, {
+      ...actionData.payload.newTaskDetails,
+      dueDate: actionData.payload.newTaskDetails.dueDate.toLocaleDateString(),
+    });
   },
 };
