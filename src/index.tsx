@@ -9,6 +9,8 @@ import { MuiTheme } from "./config/MUI";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const client = new ApolloClient({
   uri: "http://localhost:8000/graphql/",
@@ -18,17 +20,19 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={MuiTheme}>
-      <BrowserRouter>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <ApolloProvider client={client}>
-            <App />
-          </ApolloProvider>
-        </LocalizationProvider>
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <ThemeProvider theme={MuiTheme}>
+        <BrowserRouter>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <ApolloProvider client={client}>
+              <App />
+            </ApolloProvider>
+          </LocalizationProvider>
+        </BrowserRouter>
+      </ThemeProvider>
+    </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

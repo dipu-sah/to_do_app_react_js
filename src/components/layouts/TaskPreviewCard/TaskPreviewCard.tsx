@@ -6,17 +6,21 @@ import { TaskPreviewCardProps } from "./TaskPreviewCardProps";
 import CheckIcon from "@mui/icons-material/Check";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AppButton } from "../../UI/AppButton/AppButton";
-import { AppTooltip } from "../../UI/Tooltip/AppTooltip";
+import { AppModal } from "../../UI/AppModal/AppModal";
+import { AppTaskDetails } from "../AppTaskDetails/AppTaskDetails";
+import { AppText } from "../../UI/AppText/AppText";
 
 export function TaskPreviewCard({
   description,
   isCompleted = false,
+  dueDate,
   title,
   parentClass = "",
   descriptionClass = "",
   onTaskUpdate = () => {},
   onTaskDelete = () => {},
   id,
+  assignedUsers,
 }: TaskPreviewCardProps): JSX.Element {
   const rootContainer = useRef<HTMLDivElement | null>(null);
   const [openMenuTo, setOpenMenuTo] = useState<null | Element>(
@@ -24,14 +28,19 @@ export function TaskPreviewCard({
   );
 
   const [menuPos, setMenuPos] = useState<AppMenuProps["position"]>();
-
+  const [isShowingDetails, setIsShowingDetails] = useState<boolean>(false);
   return (
     <div
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         setOpenMenuTo(null);
+        setIsShowingDetails(true);
       }}
       ref={rootContainer}
       onContextMenu={(e) => {
+        if (isShowingDetails) {
+          return;
+        }
         e.preventDefault();
         setOpenMenuTo(openMenuTo == null ? e.currentTarget : null);
         setMenuPos({
@@ -46,21 +55,59 @@ export function TaskPreviewCard({
         parentClass
       }
     >
+      <AppModal
+        open={isShowingDetails}
+        onClose={() => {
+          setIsShowingDetails(false);
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        modalTitle={
+          <>
+            <AppText title={"Title of Task"} fontSize={"1rem"}>
+              {title}
+            </AppText>
+            <AppText title={"Due Date"} fontSize={"0.8rem"}>
+              {dueDate.toLocaleString()}
+            </AppText>
+          </>
+        }
+      >
+        <AppTaskDetails
+          taskDetails={{
+            description,
+            id,
+            title,
+            dueDate,
+            isCompleted,
+            assignedUsers,
+          }}
+        />
+      </AppModal>
       <header
         className={"flex flex-row border-b-[0px] border-solid border-white"}
       >
-        <AppTooltip title={"Title of the task"}>
-          <h2 className={"font-bold text-2xl line-clamp-1 grow"}>{title}</h2>
-        </AppTooltip>
+        <AppText
+          fontSize={"1.5rem"}
+          variant={"h2"}
+          title={"Title of the task"}
+          lines={1}
+          className={"w-full"}
+        >
+          {title}
+        </AppText>
         <AppButton
           title={isCompleted ? "Mark as uncompleted" : "Mark as Completed"}
           iconOnly={true}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             onTaskUpdate({
               id: id,
               title: title,
               description: description,
               isCompleted: !isCompleted,
+              dueDate,
             });
           }}
         >
@@ -99,25 +146,27 @@ export function TaskPreviewCard({
             label: "Delete this task",
             icon: <DeleteForever color={"error"} />,
             onClick: (e) => {
+              e.preventDefault();
+              e.stopPropagation();
               onTaskDelete(id);
             },
           },
           {
             label: "Edit this task",
             icon: <EditOutlined />,
-            onClick: (e) => {},
+            onClick: (e) => {
+              setIsShowingDetails(true);
+            },
           },
         ]}
       />
-      <AppTooltip title={"Description of the task"}>
-        <main
-          className={
-            "text-sm line-clamp-5 h-24 text-justify " + descriptionClass
-          }
-        >
+      <main
+        className={"text-sm line-clamp-5 h-24 text-justify " + descriptionClass}
+      >
+        <AppText title={"Description of the task"} lines={3}>
           {description}
-        </main>
-      </AppTooltip>
+        </AppText>
+      </main>
       <footer></footer>
     </div>
   );

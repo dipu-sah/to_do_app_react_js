@@ -1,20 +1,32 @@
 import { TaskAddFromProps } from "./TaskAddFrom.props";
-import React, { ForwardedRef, useState } from "react";
+import React, { ForwardedRef, useEffect, useState } from "react";
 import { AppForm } from "../../UI/AppForms/AppForm";
 import { AppInputSwitcherProps } from "../../UI/AppInputSwitcher/AppInputSwitcher.props";
 import { AppButton } from "../../UI/AppButton/AppButton";
+import { Task } from "../../../@types/DTO/requests/Tasks";
 
 export const TaskAddForm = React.forwardRef<HTMLFormElement, TaskAddFromProps>(
   TaskAddFormComponent
 );
 
 function TaskAddFormComponent(
-  { className = "", onSubmit = () => {}, resetForm = false }: TaskAddFromProps,
+  {
+    className = "",
+    onChange = () => {},
+    onSubmit = () => {},
+    resetForm = false,
+    value = {},
+  }: TaskAddFromProps,
   ref: ForwardedRef<HTMLFormElement>
 ) {
-  const [TaskDetails, setTaskDetails] = useState<Record<string, string>>({
+  const [TaskDetails, setTaskDetails] = useState<Task>({
     description: "",
     title: "",
+    id: -1,
+    assignedUsers: [],
+    isCompleted: false,
+    dueDate: new Date(),
+    ...value,
   });
 
   const taskFormFields: AppInputSwitcherProps[] = [
@@ -53,12 +65,21 @@ function TaskAddFormComponent(
     },
   ];
 
+  useEffect(() => {
+    const deBounce = setTimeout(() => {
+      onChange(TaskDetails as Task);
+    }, 800);
+    return () => {
+      clearTimeout(deBounce);
+    };
+  }, [TaskDetails]);
+
   return (
     <AppForm
       ref={ref}
       className={className}
       onSubmit={(e) => {
-        onSubmit(e);
+        onSubmit(e as Task);
       }}
       shouldReset={resetForm}
       onChange={(e) => {
@@ -66,6 +87,7 @@ function TaskAddFormComponent(
       }}
       formFields={taskFormFields}
       values={TaskDetails}
+      cardProps={{ raised: false, variant: "outlined", sx: { border: 0 } }}
     >
       <div className={"flex flex-row gap-2 items-center"}>
         <div className={"flex w-1/2 gap-8"}>

@@ -20,6 +20,7 @@ export function DraggableTaskList() {
       id: 0,
       assignedUsers: [],
       description: "HELLLLLLLO",
+      dueDate: new Date(),
     },
     {
       isCompleted: false,
@@ -27,6 +28,7 @@ export function DraggableTaskList() {
       id: 0,
       assignedUsers: [],
       description: "HELLLLLLLO",
+      dueDate: new Date(),
     },
     {
       isCompleted: false,
@@ -34,6 +36,7 @@ export function DraggableTaskList() {
       id: 0,
       assignedUsers: [],
       description: "HELLLLLLLO",
+      dueDate: new Date(),
     },
     {
       isCompleted: false,
@@ -41,6 +44,7 @@ export function DraggableTaskList() {
       id: 0,
       assignedUsers: [],
       description: "HELLLLLLLO",
+      dueDate: new Date(),
     },
     {
       isCompleted: false,
@@ -48,6 +52,7 @@ export function DraggableTaskList() {
       id: 0,
       assignedUsers: [],
       description: "HELLLLLLLO",
+      dueDate: new Date(),
     },
     {
       isCompleted: false,
@@ -55,6 +60,7 @@ export function DraggableTaskList() {
       id: 0,
       assignedUsers: [],
       description: "HELLLLLLLO",
+      dueDate: new Date(),
     },
   ];
   return (

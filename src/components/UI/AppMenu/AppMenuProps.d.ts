@@ -1,11 +1,12 @@
-import { PopoverProps } from "@mui/material/Popover/Popover";
-import { MenuItemProps } from "@mui/material";
+import { MenuItemProps, MenuProps } from "@mui/material";
 import { ReactNode } from "react";
 
-export interface AppMenuProps {
+type omit_keys_fromMenu_props = "anchorPosition";
+
+export interface AppMenuProps
+  extends Omit<MenuProps, omit_keys_fromMenu_props> {
   open: boolean;
   onClose: () => void;
-  anchorEl: PopoverProps["anchorEl"];
   position?: { top: number; left: number };
   menuItems?: (MenuItemProps & {
     label: string;

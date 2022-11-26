@@ -1,5 +1,6 @@
 import { AppInputSwitcherProps } from "../AppInputSwitcher/AppInputSwitcher.props";
 import { ReactNode } from "react";
+import { AppCardProps } from "../AppCard/AppCardProps";
 
 type inputValue = Record<string, string | string[] | File | File[]>;
 
@@ -11,4 +12,6 @@ export interface AppFormProps<ValueType> {
   onSubmit?: (e: ValueType) => void;
   className?: string;
   shouldReset?: boolean;
+  cardProps?: AppCardProps;
+  onBlur?: (values: ValueType) => void;
 }

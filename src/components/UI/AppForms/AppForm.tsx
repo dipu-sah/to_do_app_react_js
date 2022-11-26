@@ -26,6 +26,8 @@ function AppFormComponent(
     shouldReset = false,
     onChange = () => {},
     onSubmit = () => {},
+    cardProps = {},
+    onBlur = () => {},
   }: AppFormProps<Record<any, any>>,
   ref: ForwardedRef<HTMLFormElement>
 ) {
@@ -38,6 +40,7 @@ function AppFormComponent(
     handleSubmit,
     reset,
   } = useForm({
+    defaultValues: values,
     mode: "onBlur",
     reValidateMode: "onSubmit",
   });
@@ -58,7 +61,7 @@ function AppFormComponent(
   }, [shouldReset]);
 
   return (
-    <AppCard className={"box-border p-4 "} raised={false}>
+    <AppCard className={"box-border p-4 "} raised={true} {...cardProps}>
       <form
         className={`flex flex-col gap-4  ${className}`}
         ref={ref}

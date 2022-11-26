@@ -7,6 +7,7 @@ export function AppMenu({
   anchorEl,
   position,
   menuItems = [],
+  ...props
 }: AppMenuProps): JSX.Element {
   if (!menuItems.length) {
     return <></>;
@@ -18,6 +19,7 @@ export function AppMenu({
       anchorEl={anchorEl}
       anchorReference="anchorPosition"
       anchorPosition={position}
+      {...props}
     >
       {menuItems?.map((e, index) => {
         return (

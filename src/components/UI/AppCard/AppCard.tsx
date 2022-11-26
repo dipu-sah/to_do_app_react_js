@@ -1,11 +1,12 @@
-import { Card, CardContent, CardProps } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
+import { AppCardProps } from "./AppCardProps";
 
 export function AppCard({
   backgroundColor = "",
   className,
   children = <></>,
   ...props
-}: CardProps & { backgroundColor?: string }) {
+}: AppCardProps) {
   return (
     <Card
       {...props}

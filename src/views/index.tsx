@@ -1,33 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Task } from "../@types/DTO/requests/Tasks";
 import { TaskList } from "../components/layouts/TaskList/TaskList";
+import { TaskGetters } from "../store/tasks/getters";
 
 function HomePageComponent() {
-  function getRandomId() {
-    return Date.now() + Math.ceil(Math.random() * 10000);
-  }
+  const allTasks = TaskGetters.getAllTasks();
 
-  const [allTasks, setAllTasks] = useState<Task[]>([
-    {
-      id: getRandomId(),
-      title: "TEST-1",
-      isCompleted: false,
-      description: "THIS IS THE DESCRIPTION",
-    },
-    {
-      id: getRandomId(),
-      title: "TEST-2",
-      isCompleted: false,
-      description: "THIS IS THE DESCRIPTION",
-    },
-    {
-      id: getRandomId(),
-      title: "TEST-3",
-      isCompleted: false,
-      description: "THIS IS THE DESCRIPTION",
-    },
-  ]);
-  const [restForm, setResetForm] = useState<boolean>(false);
+  function setAllTasks(data: any) {}
+
   const [completedOnly, setCompletedOnly] = React.useState(false);
   const [tasksToShow, setTasksToShow] = useState<Task[]>([]);
   const [notCompletedOnly, setNotCompletedOnly] = useState<boolean>(true);
@@ -108,15 +88,7 @@ function HomePageComponent() {
         "h-full w-full justify-center items-center h-full box-border p-2 gap-4 flex flex-row"
       }
     >
-      <TaskList
-        allTasks={allTasks}
-        onTaskUpdate={(updatedTaskDetails, index) => {
-          updateTaskUpIndex(updatedTaskDetails, index);
-        }}
-        onTaskDelete={(index) => {
-          deleteTaskByIndex(index);
-        }}
-      />
+      <TaskList allTasks={allTasks} />
     </div>
   );
 }

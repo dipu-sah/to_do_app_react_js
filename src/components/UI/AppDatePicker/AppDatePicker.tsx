@@ -24,7 +24,7 @@ export const AppDatePicker = forwardRef(
               onChange={(e: Date | null, v: any) => {
                 const value = v || e;
                 if (value) {
-                  onChange({
+                  const data = {
                     target: DatePickerRef?.current || { value },
                     currentTarget: DatePickerRef?.current || { value },
                     bubbles: true,
@@ -32,7 +32,8 @@ export const AppDatePicker = forwardRef(
                     isTrusted: true,
                     timeStamp: Date.now(),
                     defaultPrevented: false,
-                  } as ChangeEvent<HTMLInputElement>);
+                  } as ChangeEvent<HTMLInputElement>;
+                  onChange(data);
                 }
               }}
               ref={ref}

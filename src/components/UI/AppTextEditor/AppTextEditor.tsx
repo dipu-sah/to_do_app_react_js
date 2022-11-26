@@ -1,16 +1,6 @@
 import "draft-js/dist/Draft.css";
-import { Editor, EditorState } from "draft-js";
+import { Editor, EditorProps } from "draft-js";
 
-export function AppTextEditor() {
-  const t: EditorState = EditorState.createEmpty();
-  return (
-    <>
-      <Editor
-        editorState={t}
-        onChange={(e: any) => {
-          console.log(e);
-        }}
-      />
-    </>
-  );
+export function AppTextEditor(props: EditorProps) {
+  return <Editor {...props} />;
 }
