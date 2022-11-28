@@ -11,6 +11,7 @@ import { AppInputSwitcherProps } from "../AppInputSwitcher/AppInputSwitcher.prop
 import { useForm } from "react-hook-form";
 import { AppTextFieldError } from "../AppTextFieldError/AppTextFieldError";
 import { AppCard } from "../AppCard/AppCard";
+import { AppButton } from "../AppButton/AppButton";
 
 export const AppForm = React.forwardRef<
   HTMLFormElement,
@@ -107,7 +108,11 @@ function AppFormComponent(
           );
         })}
         <div ref={submissionButtonContainer} className={"box-border py-4"}>
-          {children}
+          {children || (
+            <AppButton variant="contained" color="success" type="submit">
+              Submit
+            </AppButton>
+          )}
         </div>
       </form>
     </AppCard>

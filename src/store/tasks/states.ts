@@ -1,6 +1,6 @@
 import { TaskStates } from "../../@types/redux/states";
 
-function getRandomId() {
+export function getRandomId() {
   return Date.now() + Math.ceil(Math.random() * 10000);
 }
 

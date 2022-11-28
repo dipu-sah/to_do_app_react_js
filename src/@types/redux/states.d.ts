@@ -5,3 +5,7 @@ export type StateSingleTaskType = Omit<Task, "dueDate"> & { dueDate: string };
 export interface TaskStates {
   allTasks: StateSingleTaskType[];
 }
+
+export interface AllComponentStates {
+  isShowingLoginComponents: boolean;
+}

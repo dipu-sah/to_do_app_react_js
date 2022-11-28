@@ -27,7 +27,10 @@ export interface AppInputSwitcherProps
   className?: string;
   name: string;
 }
+
 interface AllFields {
+  [K: HTMLInputTypeAttribute]: any;
+
   button?: any;
   checkbox?: any;
   color?: any;

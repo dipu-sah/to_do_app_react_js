@@ -7,9 +7,16 @@ import { TaskAddForm } from "./components/layouts/TaskAddForm/TaskAddFrom";
 import { useAppDispatch } from "./store";
 import { Task } from "./@types/DTO/requests/Tasks";
 import { TASK_ACTIONS } from "./store/tasks";
+import { getRandomId } from "./store/tasks/states";
+import { AllComponentGetters } from "./store/appComponents/getters";
+import { AppUserLoginForm } from "./components/layouts/AppUserLoginForm/AppUserLoginForm";
+import { AppText } from "./components/UI/AppText/AppText";
+import { All_COMPONENT_ACTIONS } from "./store/appComponents";
 
 function App() {
   const dispatch = useAppDispatch();
+  const isShowingUserLoginForm =
+    AllComponentGetters.getIsShowingLoginComponent();
   const [currentTaskDetails, setCurrentTaskDetails] = useState<Task>({
     description: "",
     title: "",
@@ -21,6 +28,23 @@ function App() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <div className={"h-full"}>
+      <AppModal
+        open={isShowingUserLoginForm}
+        onClose={() => {
+          dispatch(
+            All_COMPONENT_ACTIONS.setIsShowingLoginComponent(
+              !isShowingUserLoginForm
+            )
+          );
+        }}
+        modalTitle={
+          <AppText variant={"h2"} fontSize={"1.5rem"} title={"Login "}>
+            Login
+          </AppText>
+        }
+      >
+        <AppUserLoginForm />
+      </AppModal>
       <AllAvailableRouter />
       <AppFab
         color={"error"}
@@ -40,6 +64,7 @@ function App() {
               dispatch(
                 TASK_ACTIONS.addNewTask({
                   ...e,
+                  id: getRandomId(),
                 })
               );
               setCurrentTaskDetails({

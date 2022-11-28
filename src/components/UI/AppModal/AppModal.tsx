@@ -21,6 +21,7 @@ export function AppModal({
 
         <AppButton
           iconOnly={true}
+          size={"small"}
           title={"close modal"}
           variant={"text"}
           color={"error"}
